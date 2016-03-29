@@ -5,22 +5,45 @@
 <!--Script Reference[1]-->
 <script src="http://cdn.zingchart.com/zingchart.min.js"></script>
 <script src="/js/json-benchmark-chart.js"></script>
+<script src="/js/reflect-benchmark-chart.js"></script>
+<h1>json序列化性能测试</h1>
 </head>
 <body>
+
+<p><strong>json序列化性能测试说明：横轴表示运行次数*10（运行10万次，每10次做一次采样），纵轴表示时间（单位微秒）</strong>
+
 <!--Chart Placement[2]-->
+<br></p><p>
+<br></p><p>
+</p><p><li>Hotspot反序列化性能</li>
 <div id="chartDiv"></div>
 <script type="text/javascript">
-  javascript:showChart({ 
+  showChart({ 
     gsonJsonPath : "/res/benchmark/json/gson_deserialize.json",
     fastjsonJsonPath : "/res/benchmark/json/fastjson_deserialize.json",
     jacksonJsonPath : "/res/benchmark/json/jackson_deserialize.json",
     chartId : 'chartDiv',
-    maxTime : 100000
+    maxTime : 1000000
   });
   console.log("invoked showChart");
 </script>
 
-<div id="chartDivArt"></div>
+<br></p><p>
+<br></p><p>
+</p><p><li>Hotspot序列化性能</li>
+<div id="chartDivSerialize"></div>
+<script type="text/javascript">
+  showChart({ 
+    gsonJsonPath : "/res/benchmark/json/gson_serialize.json",
+    fastjsonJsonPath : "/res/benchmark/json/fastjson_serialize.json",
+    jacksonJsonPath : "/res/benchmark/json/jackson_serialize.json",
+    chartId : 'chartDivSerialize',
+    maxTime : 1000000
+  });
+  console.log("invoked showChart");
+</script>
+
+<!-- <div id ='chartDivArt'></div>
 <script type="text/javascript">
   javascript:showChart({ 
     gsonJsonPath : "/res/benchmark/json/art/gson_deserialize.json",
@@ -30,8 +53,117 @@
     maxTime : 10000000
   });
   console.log("invoked showChart");
+</script> -->
+
+<br></p><p>
+<br></p><p>
+</p><p><li> dalvik虚拟机反序列化性能测试</li>
+<div id="chartDivDalvik"></div>
+<script type="text/javascript">
+  showChart({ 
+    gsonJsonPath : "/res/benchmark/json/dalvik/gson_deserialize.json",
+    fastjsonJsonPath : "/res/benchmark/json/dalvik/fastjson_deserialize.json",
+    jacksonJsonPath : "/res/benchmark/json/dalvik/jackson_deserialize.json",
+    chartId : 'chartDivDalvik',
+    maxTime : 20000000
+  });
+  console.log("invoked showChart");
+</script>
+
+<br></p><p>
+<br></p><p>
+</p><p><li> dalvik虚拟机序列化性能测试</li>
+<div id="chartDivSerializeDalvik"></div>
+<script type="text/javascript">
+  showChart({ 
+    gsonJsonPath : "/res/benchmark/json/dalvik/gson_serialize.json",
+    fastjsonJsonPath : "/res/benchmark/json/dalvik/fastjson_serialize.json",
+    jacksonJsonPath : "/res/benchmark/json/dalvik/jackson_serialize.json",
+    chartId : 'chartDivSerializeDalvik',
+    maxTime : 20000000
+  });
+  console.log("invoked showChart");
+</script>
+
+<br></p><p>
+<br></p><p>
+</p><p><li> ART虚拟机反序列化性能测试</li>
+<div id="chartDivART"></div>
+<script type="text/javascript">
+  showChart({ 
+    gsonJsonPath : "/res/benchmark/json/art/gson_deserialize.json",
+    fastjsonJsonPath : "/res/benchmark/json/art/fastjson_deserialize.json",
+    jacksonJsonPath : "/res/benchmark/json/art/jackson_deserialize.json",
+    chartId : 'chartDivART',
+    maxTime : 20000000
+  });
+  console.log("invoked showChart");
+</script>
+
+<br></p><p>
+<br></p><p>
+</p><p><li> ART虚拟机序列化性能测试</li>
+<div id="chartDivSerializeART"></div>
+<script type="text/javascript">
+  showChart({ 
+    gsonJsonPath : "/res/benchmark/json/art/gson_serialize.json",
+    fastjsonJsonPath : "/res/benchmark/json/art/fastjson_serialize.json",
+    jacksonJsonPath : "/res/benchmark/json/art/jackson_serialize.json",
+    chartId : 'chartDivSerializeART',
+    maxTime : 20000000
+  });
+  console.log("invoked showChart");
 </script>
 
 
-</body>
-</html></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://lightai.github.io/2016/03/28/json-benchmark/" data-id="cimc8b8fz0003nwvw4zswe0lt" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2016/03/28/json-parser/" class="pre"></a><a href="/2016/03/25/lowmemorykiller/" class="next">谈谈Android低内存进程回收</a></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://lightai.github.io"/></form></div><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://lightai.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/03/28/json-parser/">json-parser</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/28/json-benchmark/">json-benchmark</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/25/lowmemorykiller/">谈谈Android低内存进程回收</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Explore Android.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+<br></p><p>
+<br></p><p>
+<br></p><p>
+</p><p><strong>反射性能测试说明：横轴表示运行次数(第几次)，纵轴表示时间（单位微秒）</strong>
+<br></p><p>
+</p><p><li> hotspot虚拟机反射缓存性能测试</li>
+<div id="chartDivReflectHotspot"></div>
+<script type="text/javascript">
+  showReflectChart({ 
+    reflectJsonPath : "/res/benchmark/reflect/hotspot/reflect_invoke_test.json",
+    reflectWithoutCacheJsonPath : "/res/benchmark/reflect/hotspot/reflect_without_cache_invoke_test.json",
+    normalJsonPath : "/res/benchmark/reflect/hotspot/direct_invoke_test.json",
+    chartId : 'chartDivReflectHotspot',
+    maxTime : 20000
+  });
+  console.log("invoked showChart");
+</script>
+
+<br></p><p>
+<br></p><p>
+</p><p><li> dalvik虚拟机反射缓存性能测试</li>
+<div id="chartDivReflectDalvik"></div>
+<script type="text/javascript">
+  showReflectChart({ 
+    reflectJsonPath : "/res/benchmark/reflect/dalvik/reflect_invoke_test.json",
+    reflectWithoutCacheJsonPath : "/res/benchmark/reflect/dalvik/reflect_without_cache_invoke_test.json",
+    normalJsonPath : "/res/benchmark/reflect/dalvik/direct_invoke_test.json",
+    chartId : 'chartDivReflectDalvik',
+    maxTime : 140000
+  });
+  console.log("invoked showChart");
+</script>
+
+<br></p><p>
+<br></p><p>
+</p><p><li> ART虚拟机反射缓存性能测试</li>
+<div id="chartDivReflectArt"></div>
+<script type="text/javascript">
+  showReflectChart({ 
+    reflectJsonPath : "/res/benchmark/reflect/art/reflect_invoke_test.json",
+    reflectWithoutCacheJsonPath : "/res/benchmark/reflect/art/reflect_without_cache_invoke_test.json",
+    normalJsonPath : "/res/benchmark/reflect/art/direct_invoke_test.json",
+    chartId : 'chartDivReflectArt',
+    maxTime : 100000
+  });
+  console.log("invoked showChart");
+</script>
+
+</p></body>
+</html></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://lightai.github.io/2016/03/28/json-benchmark/" data-id="cimdnt4540002qovw4pe5i0i0" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2016/03/28/json-parser/" class="pre">jackson、fastjson、gson对比</a><a href="/2016/03/25/lowmemorykiller/" class="next">谈谈Android低内存进程回收</a></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://lightai.github.io"/></form></div><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://lightai.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/03/28/json-parser/">jackson、fastjson、gson对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/28/json-benchmark/">json-benchmark</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/25/lowmemorykiller/">谈谈Android低内存进程回收</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Explore Android.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

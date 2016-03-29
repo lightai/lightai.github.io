@@ -1,20 +1,22 @@
   
-function showChart(options) {
+function showReflectChart(options) {
     console.log(options);
 
-    var gsonJsonPath = options.gsonJsonPath;
-    var jacksonJsonPath = options.jacksonJsonPath;
-    var fastjsonJsonPath = options.fastjsonJsonPath;
+    var gsonJsonPath = options.reflectJsonPath;
+    var jacksonJsonPath = options.normalJsonPath;
+    var fastjsonJsonPath = options.reflectWithoutCacheJsonPath;
+
     var MAX_TIME = options.maxTime;
     var chartId = options.chartId;
 
     $.ajaxSettings.async = false;
 
     var gson_deserialize = [];
-    var jackson_deserialize = [];        
-    var fastjson_deserialize = [];
+    var jackson_deserialize = [];   
+    var fastjson_deserialize = [];       
 
     $.getJSON(gsonJsonPath, function(json) {
+        console.log(json);
         for (i in json) {
           // if (i < 8) continue;
 
@@ -25,13 +27,14 @@ function showChart(options) {
     });
 
     $.getJSON(fastjsonJsonPath, function(json) {
+        console.log(json);
+        for (i in json) {
+          // if (i < 8) continue;
 
-      for (i in json) {
-        // if (i < 8) continue;
-        var time = json[i].runTime;
-        if (time > MAX_TIME) time = MAX_TIME
-        fastjson_deserialize.push(time / 1000);
-      }
+          var time = json[i].runTime;
+          if (time > MAX_TIME) time = MAX_TIME
+          fastjson_deserialize.push(time / 1000);
+        }
     });
 
     $.getJSON(jacksonJsonPath, function(json) {
@@ -217,24 +220,27 @@ function showChart(options) {
                     }
                 },
                 "series":[
-                    {
-                        "values": gson_deserialize,
-                        "line-color":"#ff0000",
-                        "line-width":1,
-                        "text" : "gson"
-                    },
+
                     {
                         "values": fastjson_deserialize,
+                        "line-color":"#ff0000",
+                        "line-width":1,
+                        "text" : "反射"
+                    },
+
+                    {
+                        "values": gson_deserialize,
                         "line-color":"#0000ff",
                         "line-width":1,
-                        "text" : "fastjson"
+                        "text" : "反射缓存"
                     },
+
                     {
                         "values": jackson_deserialize,
                         "line-color":"#00ff00",
                         "line-width":1,
-                        "text" : "jackson"
-                    }
+                        "text" : "非反射"
+                    },
                 ]
             }]
         }
