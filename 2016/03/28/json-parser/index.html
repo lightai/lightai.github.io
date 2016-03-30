@@ -1,34 +1,34 @@
 <!DOCTYPE html><html lang="zh-CN,en,default"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>jackson、fastjson、gson对比 | Explore Android</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">jackson、fastjson、gson对比</h1><a id="logo" href="/.">Explore Android</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">jackson、fastjson、gson对比</h1><div class="post-meta">Mar 28, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h1 id="反序列化实现区别"><a href="#反序列化实现区别" class="headerlink" title="反序列化实现区别"></a>反序列化实现区别</h1><ul>
 <li>jackson：反射+反射缓存、良好的stream支持、高效的内存管理</li>
 <li>fastjson：<ul>
-<li>jvm虚拟机：通过ASM库运行时生成parser字节码，支持的field不能超过200个。<a href="http://www.chinaxing.org/articles/Java/2015/09/27/2015-09-26-fastjson-asm.html" target="_blank" rel="external">asm、反射性能分析</a>。</li>
-<li>android虚拟机：反射的方式</li>
+<li>jvm虚拟机：通过ASM库运行时生成parser字节码，支持的field不能超过200个。参考：<a href="http://www.chinaxing.org/articles/Java/2015/09/27/2015-09-26-fastjson-asm.html" target="_blank" rel="external">FastJson使用ASM反序列化</a>。</li>
+<li>android虚拟机：反射的方式。</li>
 </ul>
 </li>
-<li>gson：反射+反射缓存、支持部分stream、内存性能较差（gc问题）</li>
+<li>gson：反射+反射缓存、支持部分stream、内存性能较差（gc问题）。</li>
 </ul>
 <h3 id="ASM"><a href="#ASM" class="headerlink" title="ASM"></a>ASM</h3><ul>
 <li>ASM是一个 Java 字节码操控框架。它能被用来动态生成类或者增强既有类的功能。ASM 可以直接产生二进制 class 文件，也可以在类被加载入 Java 虚拟机之前动态改变类行为。</li>
 <li>ASM能够通过改造既有类，直接生成需要的代码。增强的代码是硬编码在新生成的类文件内部的，没有反射带来性能上的付出。</li>
-<li>ASM可以用来实现AOP</li>
+<li>ASM可以用来实现AOP。</li>
 </ul>
 <hr>
 <h1 id="反射性能"><a href="#反射性能" class="headerlink" title="反射性能"></a>反射性能</h1><ul>
-<li>反射性能相对于对象直接访问性能相差两个数量级（百倍）</li>
-<li>反射很大一部分性能消耗在遍历Field</li>
-<li>反射缓存能够提高1个数量级的性能</li>
-<li>测试数据参考<a href="http://lightai.github.io/2016/03/28/json-benchmark/">link</a></li>
+<li>反射性能相对于对象直接访问性能相差两个数量级（百倍）。</li>
+<li>反射很大一部分性能消耗在遍历Field。</li>
+<li>反射缓存能够提高1个数量级的性能。</li>
+<li>测试数据参考：<a href="http://lightai.github.io/2016/03/28/json-benchmark/">link</a>。</li>
 </ul>
 <hr>
 <h1 id="jackson特性"><a href="#jackson特性" class="headerlink" title="jackson特性"></a>jackson特性</h1><ul>
 <li>功能全面、强大：支持stream、databind、path功能。</li>
 <li>安装包1.2M，运行时自身占用几百k内存，解析json时内存管理很高效。</li>
-<li>实现了较全面、复杂的反射缓存功能，<br><img src="/img/jackson_annotatedClass.jpg" alt=""></li>
+<li>实现了较全面、复杂的反射缓存功能，如下：<br><img src="/img/jackson_annotatedClass.jpg" alt=""></li>
 </ul>
 <hr>
 <h1 id="Gson特性"><a href="#Gson特性" class="headerlink" title="Gson特性"></a>Gson特性</h1><ul>
 <li>安装包143k，运行时自身占用不到100k内存，但解析json时占用内存较多。</li>
-<li>通过反射做json的反序列化，缓存反射的Field做反射性能优化，简单直接。<br><img src="/img/gson-type-adaper.jpg" alt=""></li>
+<li>通过反射做json的反序列化，缓存反射的Field做反射性能优化，简单直接。如下：<br><img src="/img/gson-type-adaper.jpg" alt=""></li>
 </ul>
 <hr>
 <h1 id="fastjson特性"><a href="#fastjson特性" class="headerlink" title="fastjson特性"></a>fastjson特性</h1><ul>
@@ -38,15 +38,15 @@
 </ul>
 <hr>
 <h1 id="移动端面临的问题"><a href="#移动端面临的问题" class="headerlink" title="移动端面临的问题"></a>移动端面临的问题</h1><h4 id="冷启动问题"><a href="#冷启动问题" class="headerlink" title="冷启动问题"></a>冷启动问题</h4><ul>
-<li>由于dalvik、ART虚拟机无反射缓存时性能很差，第一次反序列化json会有很大的时间开销。参考<a href="http://blog.nimbledroid.com/2016/02/23/slow-Android-reflection.html" target="_blank" rel="external">link</a></li>
+<li>由于dalvik、ART虚拟机无反射缓存时性能很差，第一次反序列化json会有很大的时间开销。参考：<a href="http://blog.nimbledroid.com/2016/02/23/slow-Android-reflection.html" target="_blank" rel="external">link</a>。</li>
 </ul>
 <h4 id="资源占用问题"><a href="#资源占用问题" class="headerlink" title="资源占用问题"></a>资源占用问题</h4><ul>
 <li>jackson、gson对象会做反射缓存，占用堆空间，jackson比gson占用内存更大。</li>
-<li>解决方案：jackson、gson对象使用单例模式做复用，使用软引用单利对象，允许java内存不够时回收这些内存</li>
+<li>解决方案：jackson、gson对象使用单例模式做复用，使用软引用单利对象，允许java内存不够时回收这些内存。</li>
 <li>jackson支持stream的方式，做网络api的时候可以直接做输入流-&gt;Object的转换，优化性能，如下代码：</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Get(&quot;/api/some/large/json/resource&quot;)</span><br><span class="line">Response getLargeJsonResource();</span><br><span class="line"></span><br><span class="line">Response response = service.getLargeJsonResource();</span><br><span class="line">List&lt;Foo&gt; fooList = fooParser.getFooList(response.getBody().in());</span><br><span class="line"></span><br><span class="line">class FooParser&#123;</span><br><span class="line">  public List&lt;Foo&gt; getFooList(InputStream inputStream)&#123;</span><br><span class="line">    // parse the response and return the foo list</span><br><span class="line">    JsonFactory jsonFactory = new MappingJsonFactory();</span><br><span class="line">    JsonParser parser = jsonFactory.createParser(inputStream);</span><br><span class="line">    JsonToken currentToken = parser.nextToken();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="gc问题"><a href="#gc问题" class="headerlink" title="gc问题"></a>gc问题</h4><ul>
-<li>gson反序列化/序列化json的时候内存管理不是太好，引发较多gc</li>
+<li>gson反序列化/序列化json的时候内存管理不是太好，引发较多gc。</li>
 </ul>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://lightai.github.io/2016/03/28/json-parser/" data-id="cimec20y50005tkvwqy6d5ure" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2016/03/28/json-benchmark/" class="next"></a></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://lightai.github.io"/></form></div><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://lightai.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/03/28/json-parser/">jackson、fastjson、gson对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/28/json-benchmark/">json-benchmark</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/25/lowmemorykiller/">谈谈Android低内存进程回收</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Explore Android.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://lightai.github.io/2016/03/28/json-parser/" data-id="cimec4y6d0005tcvwn88u3439" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2016/03/28/json-benchmark/" class="next"></a></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://lightai.github.io"/></form></div><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://lightai.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/03/28/json-parser/">jackson、fastjson、gson对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/28/json-benchmark/">json-benchmark</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/25/lowmemorykiller/">谈谈Android低内存进程回收</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Explore Android.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
