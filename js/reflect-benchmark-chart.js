@@ -220,7 +220,6 @@ function showReflectChart(options) {
                     }
                 },
                 "series":[
-
                     {
                         "values": fastjson_deserialize,
                         "line-color":"#ff0000",

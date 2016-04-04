@@ -245,6 +245,8 @@ function showChart(options) {
           height: 400,
           width: 730
         });
+    
+        
     });
 
     $.ajaxSettings.async = true;
